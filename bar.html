@@ -5,6 +5,12 @@
 		<title>D3: A true bar chart with SVG rects</title>
       <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 		<style type="text/css">
+			body {
+				  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+				  margin: auto;
+				  position: relative;
+				  width: 960px;
+				}
 			.axis path,
 			.axis line {
 			    fill: none;
@@ -13,7 +19,7 @@
 			}
 
 			.axis text {
-			    font-family: sans-serif;
+			    font-family: arial;
 			    font-size: 11px;
 			}
 		</style>
@@ -22,13 +28,12 @@
 		<script type="text/javascript">
   
 			//Width and height
-			var w = 500;
-			var h = 500;
-			var barPadding = 10;
+			var w = 800;
+			var h = 300;
+			var barPadding = 20;
+			var leftPadding = 50;
 			
-			var dataset = [50, 10, 15, 20, 25].sort(d3.descending);
-			
-
+			var dataset = [50, 10, 15, 20, 25 , 30].sort(d3.descending);
 
 			//Create SVG element
 			var svg = d3.select("body")
@@ -39,19 +44,22 @@
 
 			var xscale = d3.scale.linear()
 									.domain([0, d3.max(dataset)])
-									.range([0, w]);
+									.range([leftPadding, w - leftPadding]);
+
+	
 
 			svg.selectAll("rect")
 			   .data(dataset)
 			   .enter()
 			   .append("rect")
 			   .attr({
-					 x: 50,
+					 x: leftPadding,
 					 y: function(d, i) { return i * (h / dataset.length); },
 					 height: h / dataset.length - barPadding,
-					 opacity: 0.6,
-					 width: function(d) { return xscale(d); },
-					 fill: function(d) { return "rgb(0, 0, " + (d*10) + ")"; }
+					 opacity: 0.7,
+					 width: function(d) { return xscale(d) - leftPadding; },
+					 fill: function(d) { return "rgb(0, 0, " + (d*10) + ")"; },
+					 transform: "translate(0, " + barPadding + ")",
 			   	});
 
 			svg.selectAll("text")
@@ -63,10 +71,10 @@
 				})
 				.attr("text-anchor", "middle")
 				.attr({
-					x: 20,
-					y: function(d, i) { return i * (h / dataset.length) + 60; },
+					x: leftPadding/2,
+					y: function(d, i) { return i * (h / dataset.length) + (barPadding *2.30) ; },
 					fill: "black",
-					"font-size": "30px",
+					"font-size": "leftPadding/2",
 					"font-family":"arial",
 					"text-anchor": "middle"
 				})
@@ -77,7 +85,8 @@
 
 			svg.append("g")
 					.attr("class", "axis")
-					.call(xAxis);
+					.call(xAxis)
+					.attr("transform", "translate(0, " + barPadding + ")");
 
 			
 		</script>
