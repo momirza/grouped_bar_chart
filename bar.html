@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3: A true bar chart with SVG rects</title>
+      <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+		<style type="text/css">
+			.axis path,
+			.axis line {
+			    fill: none;
+			    stroke: black;
+			    shape-rendering: crispEdges;
+			}
+
+			.axis text {
+			    font-family: sans-serif;
+			    font-size: 11px;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+  
+			//Width and height
+			var w = 500;
+			var h = 500;
+			var barPadding = 10;
+			
+			var dataset = [50, 10, 15, 20, 25].sort(d3.descending);
+			
+
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+
+			var xscale = d3.scale.linear()
+									.domain([0, d3.max(dataset)])
+									.range([0, w]);
+
+			svg.selectAll("rect")
+			   .data(dataset)
+			   .enter()
+			   .append("rect")
+			   .attr({
+					 x: 50,
+					 y: function(d, i) { return i * (h / dataset.length); },
+					 height: h / dataset.length - barPadding,
+					 opacity: 0.6,
+					 width: function(d) { return xscale(d); },
+					 fill: function(d) { return "rgb(0, 0, " + (d*10) + ")"; }
+			   	});
+
+			svg.selectAll("text")
+				.data(dataset)
+				.enter()
+				.append("text")
+				.text(function(d) {
+					return d;
+				})
+				.attr("text-anchor", "middle")
+				.attr({
+					x: 20,
+					y: function(d, i) { return i * (h / dataset.length) + 60; },
+					fill: "black",
+					"font-size": "30px",
+					"font-family":"arial",
+					"text-anchor": "middle"
+				})
+
+			var xAxis = d3.svg.axis()
+								.scale(xscale)
+								.orient("top");
+
+			svg.append("g")
+					.attr("class", "axis")
+					.call(xAxis);
+
+			
+		</script>
+	</body>
+</html>
