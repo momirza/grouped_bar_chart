@@ -83,6 +83,7 @@
 					"text-anchor": "middle",
 					transform: "translate(0, " + barPadding + ")",
 				})
+				.attr("id", "labels");
 
 			var xAxis = d3.svg.axis()
 								.scale(xscale)
@@ -128,7 +129,7 @@
 				        	.attr("transform", "translate(0, " + barPadding + ")");
 
 			        bars.transition()
-			        	.delay(function(d,i) { return i / dataset.length * 1000 ; })
+			        	// .delay(function(d,i) { return i / dataset.length * 1000 ; })
 			        	.duration(500)
 						.attr("y", function(d, i) { return yscale(i); })
 						.attr("height", yscale.rangeBand())
@@ -139,11 +140,41 @@
         					return "rgb(0, " + (d * 10) + ", 0)";
    						});
 
-		            svg.selectAll("text")
-						   	.data(dataset)
-						   	.text(function(d) {
+					labels = svg.selectAll("#labels")
+						   			.data(dataset);
+
+	   				labels.enter()
+	   						.append("text")
+							.text(function(d) {
+								return d;
+							})
+							.attr("text-anchor", "middle")
+							.attr({
+								x: leftPadding/2,
+								y: h ,
+								fill: "black",
+								"font-size": "leftPadding/2",
+								"font-family":"arial",
+								"text-anchor": "middle",
+								transform: "translate(0, " + barPadding + ")",
+							})
+							.attr("id", "labels");
+
+						labels.transition()
+								.duration(500)
+								.text(function(d) {
 						        return d;
-				   })
+				   		})
+			   					.attr("text-anchor", "middle")
+								.attr({
+									x: leftPadding/2,
+									y: function(d, i) { return yscale(i) + yscale.rangeBand()/2 + 7;  },
+									fill: "black",
+									"font-size": "leftPadding/2",
+									"font-family":"arial",
+									"text-anchor": "middle",
+									transform: "translate(0, " + barPadding + ")",
+								});
 				});
 			
 		</script>
