@@ -22,6 +22,16 @@
 			    font-family: arial;
 			    font-size: 11px;
 			}
+
+			rect {
+			        -moz-transition: all 0.3s;
+			        -o-transition: all 0.3s;
+			        -webkit-transition: all 0.3s;
+			        transition: all 0.3s;
+			}
+			rect:hover {
+				opacity:0.2;
+			}
 		</style>
 	</head>
 	<body>
@@ -42,7 +52,7 @@
 			                { key: 3, value: 19 },
 			                { key: 4, value: 21 },
 			                { key: 5, value: 25 },
-			                { key: 6, value: 25 }]
+			                { key: 6, value: 50 }]
 
 			var key = function(d) { return d.key; };
 
@@ -137,18 +147,20 @@
 			        		.attr("x", leftPadding)
 				        	.attr("height", yscale.rangeBand())
 				        	.attr("width", function(d) { return xscale(d.value) - leftPadding; })
-				        	.attr("fill", function(d) { return "rgb(0, " + (d.value * 10) + ", 0)"; })
-				        	.attr("transform", "translate(0, " + barPadding + ")");
+				        	.attr("fill", function(d) { return "rgb(0, 0, " +  d.value * 10 + ")"; })
+				        	.attr("transform", "translate(0, " + barPadding + ")")
+				        	
 
 			        bars.transition()
 			        	.duration(500)
 						.attr("y", function(d, i) { return yscale(i); })
 						.attr("height", yscale.rangeBand())
+
 			           	.attr("width", function(d) {
 			                return xscale(d.value) - leftPadding;
 			           })
 		              	.attr("fill", function(d) {   // <-- Down here!
-        					return "rgb(0, " + (d.value * 10) + ", 0)";
+    						return "rgb(0, 0, " +  d.value * 10 + ")"; 
    						});
 
    					bars.exit()
