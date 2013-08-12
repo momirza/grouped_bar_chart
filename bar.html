@@ -87,6 +87,8 @@
 					 transform: "translate(0, " + barPadding + ")",
 			   	});
 
+
+
 			svg.selectAll("text")
 				.data(dataset, key)
 				.enter()
@@ -129,7 +131,6 @@
 					} else {
 						dataset.shift();
 					}
-
 					xscale.domain([0, d3.max(dataset, function(d) { return d.value; })]);
 					yscale.domain(d3.range(dataset.length));
 
@@ -148,7 +149,8 @@
 				        	.attr("height", yscale.rangeBand())
 				        	.attr("width", function(d) { return xscale(d.value) - leftPadding; })
 				        	.attr("fill", function(d) { return "rgb(0, 0, " +  d.value * 10 + ")"; })
-				        	.attr("transform", "translate(0, " + barPadding + ")")
+				        	.attr("transform", "translate(0, " + barPadding + ")");
+
 				        	
 
 			        bars.transition()
