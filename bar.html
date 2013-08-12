@@ -35,8 +35,8 @@
 		</style>
 	</head>
 	<body>
-		<p id="add">Add</p>
-		<p id="remove">Remove</p>
+		<button type="button" id="add">Add</button>
+		<button type="button" id="remove">Remove</button>
 		<script type="text/javascript">
   
 			//Width and height
@@ -119,7 +119,7 @@
 					.call(xAxis)
 					.attr("transform", "translate(0, " + barPadding + ")");
 
-			d3.selectAll("p")
+			d3.selectAll("button")
 				.on("click", function() {
 					var pid = d3.select(this).attr("id");
 					if (pid == "add") {
